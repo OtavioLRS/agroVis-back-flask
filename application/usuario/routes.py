@@ -1,16 +1,18 @@
-from flask import Blueprint, make_response
-from flask import current_app as app
-from flask.json import jsonify
-# from application import
+from flask import Blueprint
 
-usuario_bp = Blueprint(
-    'usuario_bp', __name__,
-    template_folder='templates',
-    static_folder='static'
-)
+from .logic import createUser, loginUser
 
 
-@usuario_bp.route('/', methods=['GET'])
-def users():
-    head = {"Content-Type": "application/json"}
-    return make_response(jsonify({'sim': 'a'}), 200, head)
+usuario_bp = Blueprint('usuario_bp', __name__)
+
+
+# Criação de usuário
+@usuario_bp.route('/user/create', methods=['POST'])
+def create_user():
+    return createUser()
+
+
+# Validação de login
+@usuario_bp.route('/user/login', methods=['POST'])
+def login_user():
+    return loginUser()
