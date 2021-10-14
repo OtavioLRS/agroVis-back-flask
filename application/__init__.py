@@ -18,6 +18,7 @@ def init_app():
 
     with app.app_context():
         # Importando as rotas
+        from . import routes as home_bp
         from .usuario import routes as usuario
         from .cidade import routes as cidade
         from .sh4 import routes as sh4
@@ -26,6 +27,7 @@ def init_app():
         from .exportacao import routes as exportacao
 
         # Registrando blueprints
+        app.register_blueprint(home_bp.home_bp)
         app.register_blueprint(usuario.usuario_bp)
         app.register_blueprint(cidade.cidade_bp)
         app.register_blueprint(sh4.sh4_bp)
