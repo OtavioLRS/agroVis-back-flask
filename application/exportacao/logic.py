@@ -20,7 +20,7 @@ def getMapData():
         Exportacao.NO_SH4_POR.label("NO_SH4_POR"),
         func.sum(Exportacao.KG_LIQUIDO, type=Integer).label("KG_LIQUIDO"),
         func.sum(Exportacao.VL_FOB, type=Integer).label("VL_FOB"),
-        func.count().label("NUMBER_REGS")
+        func.count().label("NUM_REGS")
     ).filter(
         and_(
             Exportacao.CO_MUN.in_(
@@ -57,7 +57,7 @@ def getHorizonData():
         Exportacao.NO_SH4_POR.label("NO_SH4_POR"),
         func.sum(Exportacao.KG_LIQUIDO, type=Integer).label("KG_LIQUIDO"),
         func.sum(Exportacao.VL_FOB, type=Integer).label("VL_FOB"),
-        func.count().label("NUMBER_REGS"),
+        func.count().label("NUM_REGS"),
     ).filter(
         and_(
             Exportacao.CO_MUN.in_(
@@ -92,7 +92,7 @@ def getHorizonAuxData():
         Exportacao.NO_SH4_POR.label("NO_SH4_POR"),
         func.sum(Exportacao.KG_LIQUIDO, type=Integer).label("KG_LIQUIDO"),
         func.sum(Exportacao.VL_FOB, type=Integer).label("VL_FOB"),
-        func.count().label("NUMBER_REGS"),
+        func.count().label("NUM_REGS"),
     ).filter(
         and_(
             Exportacao.SH4.in_(
