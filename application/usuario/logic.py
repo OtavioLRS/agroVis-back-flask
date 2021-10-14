@@ -45,7 +45,10 @@ def createUser():
         try:
             db.session.add(new_user)
             db.session.commit()
-            return make_response(jsonify({'result': {'email': data['email'], 'name': data['name']}}), 200)
+            db.session.refresh(new_user)
+            new_user = new_user.serialize()
+            new_user.pop('password', None)
+            return make_response(jsonify(new_user), 200)
 
         except:
             return jsonify({'msg': 'Erro no cadastro!'})
