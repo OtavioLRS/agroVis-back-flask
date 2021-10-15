@@ -1,9 +1,10 @@
 from flask import json, request
 from flask.helpers import make_response
 import sqlalchemy
-from sqlalchemy.sql import func, and_, or_, asc, desc, cast
+from sqlalchemy.sql import func, and_, or_, asc, desc
+from sqlalchemy.sql.expression import cast
 
-from sqlalchemy.sql.sqltypes import BigInteger, Float, Integer, Text
+from sqlalchemy.sql.sqltypes import Integer
 
 from .models import Exportacao
 from application import db
@@ -18,8 +19,10 @@ def getMapData():
         Exportacao.NO_MUN_MIN.label("NO_MUN_MIN"),
         Exportacao.SH4.label("SH4"),
         Exportacao.NO_SH4_POR.label("NO_SH4_POR"),
-        func.sum(Exportacao.KG_LIQUIDO, type=Integer).label("KG_LIQUIDO"),
-        func.sum(Exportacao.VL_FOB, type=Integer).label("VL_FOB"),
+        sqlalchemy.cast(func.sum(Exportacao.KG_LIQUIDO),
+                        sqlalchemy.BigInteger).label("KG_LIQUIDO"),
+        sqlalchemy.cast(func.sum(Exportacao.VL_FOB),
+                        sqlalchemy.BigInteger).label("VL_FOB"),
         func.count().label("NUM_REGS")
     ).filter(
         and_(
@@ -36,12 +39,9 @@ def getMapData():
     ).group_by(
         Exportacao.CO_MUN,
         Exportacao.SH4,
-    ).order_by(
-        asc(Exportacao.VL_FOB)
-    )
+    ).order_by(func.sum(Exportacao.VL_FOB).asc())
 
-    response = Exportacao.serialize_rowlist(
-        db.session.execute(query), cast_to_int=["VL_FOB", "KG_LIQUIDO"])
+    response = Exportacao.serialize_rowlist(db.session.execute(query))
 
     return json.dumps(response)
 
@@ -123,8 +123,10 @@ def getModalData():
         Exportacao.NO_MUN_MIN.label("NO_MUN_MIN"),
         Exportacao.SH4.label("SH4"),
         Exportacao.NO_SH4_POR.label("NO_SH4_POR"),
-        func.sum(Exportacao.KG_LIQUIDO, type=Integer).label("KG_LIQUIDO"),
-        func.sum(Exportacao.VL_FOB, type=Integer).label("VL_FOB"),
+        sqlalchemy.cast(func.sum(Exportacao.KG_LIQUIDO),
+                        sqlalchemy.BigInteger).label("KG_LIQUIDO"),
+        sqlalchemy.cast(func.sum(Exportacao.VL_FOB),
+                        sqlalchemy.BigInteger).label("VL_FOB"),
     ).filter(
         and_(
             Exportacao.CO_MUN.in_(
@@ -139,11 +141,8 @@ def getModalData():
         )
     ).group_by(
         Exportacao.CO_MUN,
-    ).order_by(
-        desc(Exportacao.VL_FOB)
-    )
+    ).order_by(func.sum(Exportacao.VL_FOB).desc())
 
-    response = Exportacao.serialize_rowlist(
-        db.session.execute(query), cast_to_int=["VL_FOB", "KG_LIQUIDO"])
+    response = Exportacao.serialize_rowlist(db.session.execute(query))
 
     return json.dumps(response)

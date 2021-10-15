@@ -12,15 +12,5 @@ class Serializer(object):
         return [row._asdict() for row in list]
 
     @staticmethod
-    def serialize_rowlist(list, cast_to_int):
-        result = []
-        for row in list:
-            item = row._asdict()
-            for fix in cast_to_int:
-                item[fix] = int(item[fix])
-            result.append(item)
-        return result
-
-    @staticmethod
     def serialize_list(l):
         return [m.serialize() for m in l]
