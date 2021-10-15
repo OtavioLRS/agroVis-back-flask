@@ -55,8 +55,10 @@ def getHorizonData():
         Exportacao.CO_MES.label("CO_MES"),
         Exportacao.SH4.label("SH4"),
         Exportacao.NO_SH4_POR.label("NO_SH4_POR"),
-        func.sum(Exportacao.KG_LIQUIDO, type=Integer).label("KG_LIQUIDO"),
-        func.sum(Exportacao.VL_FOB, type=Integer).label("VL_FOB"),
+        sqlalchemy.cast(func.sum(Exportacao.KG_LIQUIDO),
+                        sqlalchemy.BigInteger).label("KG_LIQUIDO"),
+        sqlalchemy.cast(func.sum(Exportacao.VL_FOB),
+                        sqlalchemy.BigInteger).label("VL_FOB"),
         func.count().label("NUM_REGS"),
     ).filter(
         and_(
@@ -75,8 +77,7 @@ def getHorizonData():
         Exportacao.CO_MES,
     )
 
-    response = Exportacao.serialize_rowlist(
-        db.session.execute(query), cast_to_int=["VL_FOB", "KG_LIQUIDO"])
+    response = Exportacao.serialize_rowlist(db.session.execute(query))
 
     return json.dumps(response)
 
@@ -90,8 +91,10 @@ def getHorizonAuxData():
         Exportacao.CO_MES.label("CO_MES"),
         Exportacao.SH4.label("SH4"),
         Exportacao.NO_SH4_POR.label("NO_SH4_POR"),
-        func.sum(Exportacao.KG_LIQUIDO, type=Integer).label("KG_LIQUIDO"),
-        func.sum(Exportacao.VL_FOB, type=Integer).label("VL_FOB"),
+        sqlalchemy.cast(func.sum(Exportacao.KG_LIQUIDO),
+                        sqlalchemy.BigInteger).label("KG_LIQUIDO"),
+        sqlalchemy.cast(func.sum(Exportacao.VL_FOB),
+                        sqlalchemy.BigInteger).label("VL_FOB"),
         func.count().label("NUM_REGS"),
     ).filter(
         and_(
@@ -108,8 +111,7 @@ def getHorizonAuxData():
         Exportacao.CO_MES,
     )
 
-    response = Exportacao.serialize_rowlist(
-        db.session.execute(query), cast_to_int=["VL_FOB", "KG_LIQUIDO"])
+    response = Exportacao.serialize_rowlist(db.session.execute(query))
 
     return json.dumps(response)
 
