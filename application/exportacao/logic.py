@@ -30,6 +30,8 @@ def getMapData():
                 data["filter"]["cities"]) if data["filter"]["cities"] != [] else sqlalchemy.true(),
             Exportacao.SH4.in_(
                 data["filter"]["products"]) if data["filter"]["products"] != [] else sqlalchemy.true(),
+            Exportacao.CO_BLOCO.in_(
+                data["filter"]["continents"]) if data["filter"]["continents"] != [] else sqlalchemy.true(),
             func.date(
                 Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
@@ -43,7 +45,7 @@ def getMapData():
 
     response = Exportacao.serialize_rowlist(db.session.execute(query))
 
-    return json.dumps(response)
+    return make_response(json.dumps(response), 200, {"Content-Type": "application/json"})
 
 
 # Recupera dados utilizados para preencher o HorizonChart
@@ -66,6 +68,8 @@ def getHorizonData():
                 data["filter"]["cities"]) if data["filter"]["cities"] != [] else sqlalchemy.true(),
             Exportacao.SH4.in_(
                 data["filter"]["products"]) if data["filter"]["products"] != [] else sqlalchemy.true(),
+            Exportacao.CO_BLOCO.in_(
+                data["filter"]["continents"]) if data["filter"]["continents"] != [] else sqlalchemy.true(),
             func.date(
                 Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
@@ -79,7 +83,7 @@ def getHorizonData():
 
     response = Exportacao.serialize_rowlist(db.session.execute(query))
 
-    return json.dumps(response)
+    return make_response(json.dumps(response), 200, {"Content-Type": "application/json"})
 
 
 # Recupera dados auxiliares para preencher o HorizonChart
@@ -113,7 +117,7 @@ def getHorizonAuxData():
 
     response = Exportacao.serialize_rowlist(db.session.execute(query))
 
-    return json.dumps(response)
+    return make_response(json.dumps(response), 200, {"Content-Type": "application/json"})
 
 
 # Recupera dados para preencher o modal de um SH4
@@ -147,4 +151,4 @@ def getModalData():
 
     response = Exportacao.serialize_rowlist(db.session.execute(query))
 
-    return json.dumps(response)
+    return make_response(json.dumps(response), 200, {"Content-Type": "application/json"})

@@ -51,7 +51,7 @@ def createUser():
             return make_response(jsonify(new_user), 200)
 
         except:
-            return jsonify({'msg': 'Erro no cadastro!'})
+            return make_response(jsonify({'msg': 'Erro no cadastro!'}), 400)
 
     else:
         return make_response(jsonify({'msg': 'Dados inválidas!'}), 400)

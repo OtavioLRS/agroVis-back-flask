@@ -9,7 +9,8 @@ def init_app():
     # Inicia o app
     app = Flask(__name__, instance_relative_config=False)
     cors = CORS(app)
-    app.config.from_object('config.Config')
+    app.config.from_object('config.DevConfig')
+    # app.config.from_object('config.ProdConfig')
     app.config['CORS_HEADERS'] = 'Content-Type'
     app.config['AC'] = 'Content-Type'
 
