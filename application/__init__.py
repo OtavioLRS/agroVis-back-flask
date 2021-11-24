@@ -1,14 +1,15 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 db = SQLAlchemy()
 
 
 def init_app():
     # Inicia o app
-    app = Flask(__name__, instance_relative_config=False)
+    app = Flask(__name__, instance_relative_config=True)
     cors = CORS(app)
+    # app.config.from_object('config.Config')
     app.config.from_object('config.DevConfig')
     # app.config.from_object('config.ProdConfig')
     app.config['CORS_HEADERS'] = 'Content-Type'
