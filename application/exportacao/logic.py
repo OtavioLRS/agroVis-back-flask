@@ -29,17 +29,23 @@ def getMapData():
                 data["filter"]["cities"]) if data["filter"]["cities"] != [] else sqlalchemy.true(),
             Exportacao.SH4.in_(
                 data["filter"]["products"]) if data["filter"]["products"] != [] else sqlalchemy.true(),
-            Exportacao.CO_BLOCO.in_(
-                data["filter"]["continents"]) if data["filter"]["continents"] != [] else sqlalchemy.true(),
             func.date(
                 Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
             Exportacao.VL_FOB != 0,
             Exportacao.CO_MUN != 0000000,
+
+            (Exportacao.CO_PAIS.in_(data["filter"]["countries"])
+             if data["filter"]["countries"] != [] else sqlalchemy.true())
+
+            if data["filter"]["mapDivision"] == 'country' else
+
+            (Exportacao.CO_BLOCO.in_(data["filter"]["continents"])
+             if data["filter"]["continents"] != [] else sqlalchemy.true())
         )
     ).group_by(
         Exportacao.CO_MUN,
-        Exportacao.SH4,
+        # Exportacao.SH4,
     ).order_by(func.sum(Exportacao.VL_FOB).asc())
 
     response = Exportacao.serialize_rowlist(db.session.execute(query))
@@ -68,13 +74,19 @@ def getMundiDataContinent():
                 data["filter"]["cities"]) if data["filter"]["cities"] != [] else sqlalchemy.true(),
             Exportacao.SH4.in_(
                 data["filter"]["products"]) if data["filter"]["products"] != [] else sqlalchemy.true(),
-            Exportacao.CO_BLOCO.in_(
-                data["filter"]["continents"]) if data["filter"]["continents"] != [] else sqlalchemy.true(),
             func.date(
                 Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
             Exportacao.VL_FOB != 0,
             Exportacao.CO_MUN != 0000000,
+
+            (Exportacao.CO_PAIS.in_(data["filter"]["countries"])
+             if data["filter"]["countries"] != [] else sqlalchemy.true())
+
+            if data["filter"]["mapDivision"] == 'country' else
+
+            (Exportacao.CO_BLOCO.in_(data["filter"]["continents"])
+             if data["filter"]["continents"] != [] else sqlalchemy.true())
         )
     ).group_by(
         Exportacao.CO_BLOCO,
@@ -106,13 +118,19 @@ def getMundiDataCountry():
                 data["filter"]["cities"]) if data["filter"]["cities"] != [] else sqlalchemy.true(),
             Exportacao.SH4.in_(
                 data["filter"]["products"]) if data["filter"]["products"] != [] else sqlalchemy.true(),
-            Exportacao.CO_BLOCO.in_(
-                data["filter"]["continents"]) if data["filter"]["continents"] != [] else sqlalchemy.true(),
             func.date(
                 Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
             Exportacao.VL_FOB != 0,
             Exportacao.CO_MUN != 0000000,
+
+            (Exportacao.CO_PAIS.in_(data["filter"]["countries"])
+             if data["filter"]["countries"] != [] else sqlalchemy.true())
+
+            if data["filter"]["mapDivision"] == 'country' else
+
+            (Exportacao.CO_BLOCO.in_(data["filter"]["continents"])
+             if data["filter"]["continents"] != [] else sqlalchemy.true())
         )
     ).group_by(
         Exportacao.CO_PAIS,
@@ -143,12 +161,18 @@ def getHorizonData():
                 data["filter"]["cities"]) if data["filter"]["cities"] != [] else sqlalchemy.true(),
             Exportacao.SH4.in_(
                 data["filter"]["products"]) if data["filter"]["products"] != [] else sqlalchemy.true(),
-            Exportacao.CO_BLOCO.in_(
-                data["filter"]["continents"]) if data["filter"]["continents"] != [] else sqlalchemy.true(),
             func.date(
                 Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
             Exportacao.CO_MUN != 0000000,
+
+            (Exportacao.CO_PAIS.in_(data["filter"]["countries"])
+             if data["filter"]["countries"] != [] else sqlalchemy.true())
+
+            if data["filter"]["mapDivision"] == 'country' else
+
+            (Exportacao.CO_BLOCO.in_(data["filter"]["continents"])
+             if data["filter"]["continents"] != [] else sqlalchemy.true())
         )
     ).group_by(
         Exportacao.SH4,
@@ -219,6 +243,15 @@ def getModalData():
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
             Exportacao.VL_FOB != 0,
             Exportacao.CO_MUN != 0000000,
+
+            # Sera?
+            # (Exportacao.CO_PAIS.in_(data["filter"]["countries"])
+            #  if data["filter"]["countries"] != [] else sqlalchemy.true())
+
+            # if data["filter"]["mapDivision"] == 'country' else
+
+            # (Exportacao.CO_BLOCO.in_(data["filter"]["continents"])
+            #  if data["filter"]["continents"] != [] else sqlalchemy.true())
         )
     ).group_by(
         Exportacao.CO_MUN,

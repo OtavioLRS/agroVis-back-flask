@@ -32,6 +32,6 @@ def get_horizon_aux_data():
     return getHorizonAuxData()
 
 
-@exportacao_bp.route('/exportacao/modal', methods=['POST'])
+@exportacao_bp.route('/exportacao/horizon/modal', methods=['POST'])
 def get_modal_data():
     return getModalData()
