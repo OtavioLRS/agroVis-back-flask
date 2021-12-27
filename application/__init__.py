@@ -39,6 +39,6 @@ def init_app():
         app.register_blueprint(exportacao.exportacao_bp)
 
         # Criando modelos do DB
-        # db.create_all()
+        db.create_all()
 
         return app
