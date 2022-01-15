@@ -3,7 +3,7 @@ from application.serializer import Serializer
 
 
 class Exportacao(db.Model, Serializer):
-    __tablename__ = 'exportacao_teste'
+    __tablename__ = 'exportacao'
     KEY = db.Column(db.String(21), primary_key=True,
                     index=True)
     CO_DATA = db.Column(db.DateTime, index=True)

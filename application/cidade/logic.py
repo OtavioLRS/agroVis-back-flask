@@ -3,7 +3,6 @@ from flask.helpers import make_response
 
 from .models import Cidade
 
-
 # Recupera todas as cidades
 def getCities():
     result = Cidade.query.all()

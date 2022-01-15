@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-from .logic import getMapData, getHorizonData, getHorizonAuxData, getModalData, getMundiDataContinent, getMundiDataCountry
+from .logic import getMapData, getMapModalData, getHorizonData, getHorizonAuxData, getModalData, getMundiDataContinent, getMundiDataCountry
 
 
 # Blueprint - Dados das anotações
@@ -11,7 +11,6 @@ exportacao_bp = Blueprint('exportacao_bp', __name__)
 def get_map_data():
     return getMapData()
 
-
 @exportacao_bp.route('/exportacao/mundi/continente', methods=['POST'])
 def get_mundi_data_continent():
     return getMundiDataContinent()
@@ -20,6 +19,10 @@ def get_mundi_data_continent():
 @exportacao_bp.route('/exportacao/mundi/pais', methods=['POST'])
 def get_mundi_data_country():
     return getMundiDataCountry()
+
+@exportacao_bp.route('/exportacao/mapa/modal', methods=['POST'])
+def get_map_modal_data():
+    return getMapModalData()
 
 
 @exportacao_bp.route('/exportacao/horizon', methods=['POST'])
