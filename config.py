@@ -12,12 +12,12 @@ class Config:
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # DEBUG = True
-    # TESTING = True
-    # FLASK_ENV = 'development'
-    # SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_URI_LOCAL")
+    DEBUG = True
+    TESTING = True
+    FLASK_ENV = 'development'
+    SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_URI_LOCAL")
 
-    DEBUG = False
-    TESTING = False
-    FLASK_ENV = 'production'
-    SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_URI")
+    # DEBUG = False
+    # TESTING = False
+    # FLASK_ENV = 'production'
+    # SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_URI")
