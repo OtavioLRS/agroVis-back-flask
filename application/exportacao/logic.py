@@ -29,8 +29,6 @@ def getMapData():
             func.date(
                 Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
-            Exportacao.VL_FOB != 0,
-            Exportacao.CO_MUN != 0000000,
 
             (Exportacao.CO_PAIS.in_(data["filter"]["countries"])
              if data["filter"]["countries"] != [] else sqlalchemy.true())
@@ -72,8 +70,6 @@ def getMundiDataContinent():
             func.date(
                 Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
-            Exportacao.VL_FOB != 0,
-            Exportacao.CO_MUN != 0000000,
 
             (Exportacao.CO_PAIS.in_(data["filter"]["countries"])
              if data["filter"]["countries"] != [] else sqlalchemy.true())
@@ -116,8 +112,6 @@ def getMundiDataCountry():
             func.date(
                 Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
-            Exportacao.VL_FOB != 0,
-            Exportacao.CO_MUN != 0000000,
 
             (Exportacao.CO_PAIS.in_(data["filter"]["countries"])
              if data["filter"]["countries"] != [] else sqlalchemy.true())
@@ -157,7 +151,6 @@ def getMapModalData() :
             func.date(
                 Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
-            Exportacao.CO_MUN != 0000000,
 
             (Exportacao.CO_PAIS.in_(data["filter"]["countries"])
              if data["filter"]["countries"] != [] else sqlalchemy.true())
@@ -196,7 +189,6 @@ def getMapModalData() :
                     Exportacao.SH4 == row["SH4"],
                     func.date(Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
                     func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
-                    Exportacao.CO_MUN != 0000000,
                     Exportacao.CO_PAIS.in_(data["filter"]["countries"]) if data["filter"]["countries"] != [] else sqlalchemy.true()
                 )
             )
@@ -223,7 +215,6 @@ def getMapModalData() :
                     Exportacao.SH4 == row["SH4"],
                     func.date(Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
                     func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
-                    Exportacao.CO_MUN != 0000000,
                     Exportacao.CO_BLOCO.in_(data["filter"]["continents"]) if data["filter"]["continents"] != [] else sqlalchemy.true()
                 )
             )
@@ -279,7 +270,6 @@ def getHorizonData():
             func.date(
                 Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
-            Exportacao.CO_MUN != 0000000,
 
             (Exportacao.CO_PAIS.in_(data["filter"]["countries"])
              if data["filter"]["countries"] != [] else sqlalchemy.true())
@@ -322,8 +312,6 @@ def getModalData():
             func.date(
                 Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
             func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
-            Exportacao.VL_FOB != 0,
-            Exportacao.CO_MUN != 0000000,
 
             (Exportacao.CO_PAIS.in_(data["filter"]["countries"])
              if data["filter"]["countries"] != [] else sqlalchemy.true())
