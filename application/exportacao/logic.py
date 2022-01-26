@@ -300,40 +300,6 @@ def getHorizonData():
     return make_response(json.dumps(response), 200, {"Content-Type": "application/json"})
 
 
-# Recupera dados auxiliares para preencher o HorizonChart
-def getHorizonAuxData():
-    data = request.get_json()
-
-    query = db.session.query(
-        Exportacao.CO_ANO.label("CO_ANO"),
-        Exportacao.CO_MES.label("CO_MES"),
-        Exportacao.SH4.label("SH4"),
-        Exportacao.NO_SH4_POR.label("NO_SH4_POR"),
-        sqlalchemy.cast(func.sum(Exportacao.KG_LIQUIDO),
-                        sqlalchemy.BigInteger).label("KG_LIQUIDO"),
-        sqlalchemy.cast(func.sum(Exportacao.VL_FOB),
-                        sqlalchemy.BigInteger).label("VL_FOB"),
-        func.count().label("NUM_REGS"),
-    ).filter(
-        and_(
-            Exportacao.SH4.in_(
-                data["filter"]["products"]) if data["filter"]["products"] != [] else sqlalchemy.true(),
-            func.date(
-                Exportacao.CO_DATA) >= data["filter"]["beginPeriod"]+"-01",
-            func.date(Exportacao.CO_DATA) <= data["filter"]["endPeriod"]+"-30",
-            Exportacao.CO_MUN == 0000000,
-        )
-    ).group_by(
-        Exportacao.SH4,
-        Exportacao.CO_ANO,
-        Exportacao.CO_MES,
-    )
-
-    response = Exportacao.serialize_rowlist(db.session.execute(query))
-
-    return make_response(json.dumps(response), 200, {"Content-Type": "application/json"})
-
-
 # Recupera dados para preencher o modal de um SH4
 def getModalData():
     data = request.get_json()

@@ -26,6 +26,7 @@ def init_app():
         from .anotacao import routes as anotacao
         from .sh4_ncm import routes as sh4_ncm
         from .exportacao import routes as exportacao
+        from .exportacao_aux import routes as exportacao_aux
 
         # Registrando blueprints
         app.register_blueprint(home_bp.home_bp)
@@ -35,6 +36,7 @@ def init_app():
         app.register_blueprint(anotacao.anotacao_bp)
         app.register_blueprint(sh4_ncm.sh4_ncm_bp)
         app.register_blueprint(exportacao.exportacao_bp)
+        app.register_blueprint(exportacao_aux.exportacao_aux_bp)
 
         # Criando modelos do DB
         db.create_all()
